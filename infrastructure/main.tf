@@ -1,5 +1,4 @@
 provider digitalocean {
-    token = "372578ab9ede54402d38ae4bc0f966170930b4b3588f0008a0c8698618c0f3f2"
 }
 
 data "digitalocean_image" "jenkins" {
