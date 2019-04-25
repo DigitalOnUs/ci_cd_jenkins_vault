@@ -1,5 +1,5 @@
 storage "file" {
-  path = "/vault/data"
+  path = "/var/lib/jenkins/vault/data"
 }
 
 listener "tcp" {

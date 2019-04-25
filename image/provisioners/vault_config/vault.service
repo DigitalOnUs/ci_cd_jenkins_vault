@@ -2,15 +2,15 @@
 Description=vault service
 Requires=network-online.target
 After=network-online.target
-ConditionFileNotEmpty=/vault/config/config.hcl
+ConditionFileNotEmpty=/var/lib/jenkins/vault/config/config.hcl
 
 [Service]
 EnvironmentFile=-/etc/sysconfig/vault
 Environment=GOMAXPROCS=2
 Restart=on-failure
-ExecStart=/usr/local/bin/vault server -config=/vault/config/config.hcl
-StandardOutput=/vault/output.log
-StandardError=/vault/error.log
+ExecStart=/usr/local/bin/vault server -config=/var/lib/jenkins/vault/config/config.hcl
+StandardOutput=/var/lib/jenkins/vault/output.log
+StandardError=/var/lib/jenkins/vault/error.log
 LimitMEMLOCK=infinity
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGTERM

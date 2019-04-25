@@ -1,5 +1,5 @@
 ---
-- hosts: jenkins_droplet
+- hosts: all
   user: root
   sudo: yes
   roles:

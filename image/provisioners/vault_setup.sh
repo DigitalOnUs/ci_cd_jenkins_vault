@@ -1,8 +1,8 @@
 #! /bin/bash
 echo "Configuring vault..."
 echo "Making the Vault dirs"
-mkdir -p /vault/data
-mkdir -p /vault/config
-mkdir -p /vault/logs
+mkdir -p /var/lib/jenkins/vault/data
+mkdir -p /var/lib/jenkins/vault/config
+mkdir -p /var/lib/jenkins/vault/logs
 
 
