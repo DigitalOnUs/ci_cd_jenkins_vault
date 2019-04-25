@@ -1,0 +1,61 @@
+{
+    "variables" : {
+        "token"  : "{{env `DIGITALOCEAN_TOKEN_DIGITAL`}}",
+        "provs"  : "provisioners",
+        "config" : "vault_config"
+    },
+    "builders" : [
+    {
+        "type" : "digitalocean",
+        "api_token": "{{user `token`}}",
+        "ssh_username" : "root",
+        "image" : "ubuntu-18-04-x64",
+        "region" : "nyc1",
+        "size" : "1gb",
+        "snapshot_name" : "jenkins-vault-image"
+    }],
+    "provisioners" : [
+    {
+        "type" : "shell",
+        "script" : "{{user `provs`}}/base.sh"
+    },
+    {
+        "type" : "shell",
+        "script" : "{{user `provs`}}/jenkins.sh"
+    }, 
+    {
+        "type" : "shell",
+        "script" :  "{{user `provs`}}/terraform.sh"   
+    },
+    {
+        "type" : "shell",
+        "script" : "{{user `provs`}}/docker.sh"
+    },
+    { 
+        "type" : "shell",
+        "inline" : ["usermod -a -G docker jenkins"]
+    },
+    {
+        "type" : "shell",
+        "script" :  "{{user `provs`}}/vault.sh"
+    },
+    {
+        "type" : "shell",
+        "script" : "{{user `provs`}}/vault_setup.sh"
+    },
+    {
+        "type" : "file",
+        "source" : "{{user `provs`}}/{{user `config`}}/vault.service",
+        "destination" : "/etc/systemd/system/vault.service"
+    },
+    {
+        "type" : "file",
+        "source" : "{{user `provs`}}/{{user `config`}}/config.hcl",
+        "destination" : "/var/lib/jenkins/vault/config/config.hcl"
+    },
+    {
+        "type" : "shell",
+        "inline" : "systemctl enable vault.service"
+    }]
+    
+}
